@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Geschenk konfigurieren | Tamaras Wunschliste</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="supabase-client.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+    <script src="quiz.js" defer></script>
+  </head>
+  <body class="quiz-page-background">
+    <header class="topbar">
+      <a class="brand" href="index.html"
+        ><img class="brand-logo" src="images/logo.jpg" alt="" /><span
+          class="brand-word"
+          >Wishlist</span
+        ></a
+      >
+      <span class="header-divider" aria-hidden="true"></span>
+      <strong class="list-title"></strong>
+      <nav class="header-nav" aria-label="Hauptnavigation">
+        <a href="index.html">Wunschliste</a><a href="admin.html">Admin</a>
+      </nav>
+      <button class="bag-button" id="open-bag" type="button">
+        Geschenk-Ablage <span id="bag-count">0</span>
+      </button>
+    </header>
+
+    <main class="quiz-page">
+      <a class="back-link" href="index.html">&larr; Zur Wunschliste</a>
+      <section class="quiz-panel" id="quiz-panel">
+        <p class="eyebrow">Geschenk konfigurieren</p>
+        <div class="progress-row">
+          <span>Frage <strong id="step-number">1</strong> von 3</span
+          ><span id="progress-percent">33%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p class="quiz-error" id="quiz-error" role="alert"></p>
+
+        <fieldset class="quiz-step" data-step="0">
+          <legend>Wer bist du?</legend>
+          <p class="question-hint">
+            Damit ich passende Wünsche vorschlagen kann.
+          </p>
+          <label class="choice"
+            ><input type="radio" name="audience" value="schwester" /><span
+              >Schwester</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="audience" value="familie" /><span
+              >Familienmitglied</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="audience" value="freund" /><span
+              >Freund/in</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="audience" value="sonstige" /><span
+              >Jemand anderes</span
+            ></label
+          >
+          <label class="choice">
+  <input type="radio" name="audience" value="mom">
+  <span>Mom</span>
+</label>
+
+<label class="choice">
+  <input type="radio" name="audience" value="weitere">
+  <span>Weitere Wünsche</span>
+</label>
+</fieldset>
+
+        <fieldset class="quiz-step is-hidden" data-step="1">
+          <legend>Welches Budget hast du?</legend>
+          <p class="question-hint">Wähle den ungefaehren Preisrahmen.</p>
+          <label class="choice"
+            ><input type="radio" name="budget" value="5-10" /><span
+              >5-10 EUR</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="budget" value="10-15" /><span
+              >10-15 EUR</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="budget" value="15-20" /><span
+              >15-20 EUR</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="budget" value="20-25" /><span
+              >20-25 EUR</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="budget" value="30-50" /><span
+              >30-50 EUR</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="budget" value="50-100" /><span
+              >50-100 EUR</span
+            ></label
+          >
+          <label class="choice"
+            ><input type="radio" name="budget" value="100-plus" /><span
+              >100 EUR oder mehr</span
+            ></label
+          >
+        </fieldset>
+
+        <fieldset class="quiz-step is-hidden" data-step="2">
+          <legend>Wie möchtest du schenken?</legend>
+          <p class="question-hint">
+            Du kannst später weitere Wünsche ansehen.
+          </p>
+          <label class="choice"
+            ><input type="radio" name="gift-style" value="ein-grosses" /><span
+              >Ein größeres Geschenk</span
+            ></label
+          >
+          <label class="choice"
+            ><input
+              type="radio"
+              name="gift-style"
+              value="mehrere-kleine"
+            /><span>Mehrere kleinere Geschenke</span></label
+          >
+          <label class="choice"
+            ><input type="radio" name="gift-style" value="gemeinsam" /><span
+              >Gemeinsam mit anderen schenken</span
+            ></label
+          >
+        </fieldset>
+
+        <div class="quiz-actions">
+          <button
+            class="button button-soft"
+            id="back-button"
+            type="button"
+            hidden
+          >
+            Zurück
+          </button>
+          <button class="button button-primary" id="next-button" type="button">
+            Weiter
+          </button>
+        </div>
+      </section>
+
+      <section class="results is-hidden" id="results">
+        <p class="eyebrow">Deine Auswahl</p>
+        <h1 id="results-title">Passende Geschenkideen</h1>
+        <p id="results-note" class="section-intro"></p>
+        <div class="wish-grid" id="results-grid"></div>
+        <div class="results-actions">
+          <button class="button button-soft" id="restart-button" type="button">
+            Nochmal konfigurieren</button
+          ><a class="button button-primary" href="index.html#wishes"
+            >Alle Wünsche ansehen</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      ><a href="index.html">Zur Übersicht</a>
+    </footer>
+
+    <dialog class="bag-dialog" id="gift-dialog" aria-labelledby="bag-title">
+  <div class="dialog-head">
+    <div>
+      <p class="eyebrow">Deine Auswahl</p>
+      <h2 id="bag-title">Geschenk-Ablage</h2>
+    </div>
+    <button class="icon-button" id="close-bag" type="button" aria-label="Schliessen">
+      &times;
+    </button>
+  </div>
+  <div id="bag-items"></div>
+</dialog>
+  </body>
+</html>

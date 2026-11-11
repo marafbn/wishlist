@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wunschliste verwalten | Tamara</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+      defer
+    ></script>
+    <script src="supabase-client.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="admin.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html"
+        ><img class="brand-logo" src="images/logo.jpg" alt="" /><span
+          class="brand-word"
+          >Wishlist</span
+        ></a
+      >
+      <span class="header-divider" aria-hidden="true"></span>
+      <strong class="list-title">Wunschliste verwalten</strong>
+      <nav class="header-nav" aria-label="Hauptnavigation">
+        <a href="index.html">Zur Wunschliste</a>
+      </nav>
+    </header>
+
+    <main class="admin-page">
+      <a class="back-link" href="index.html">&larr; Zur Wunschliste</a>
+      <section class="admin-panel" id="auth-panel">
+        <p class="eyebrow">Privater Bereich</p>
+        <h1 id="auth-title">Admin-Anmeldung</h1>
+        <p class="section-intro" id="auth-help">
+          Melde dich mit dem Namen Tamara an.
+        </p>
+        <form id="auth-form" class="form-grid">
+          <label>
+            E-Mail-Adresse
+            <input
+              id="admin-email"
+              type="email"
+              autocomplete="username"
+              required
+            />
+          </label>
+
+          <label id="password-label">
+            Passwort
+            <input
+              id="admin-password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+
+          <p class="form-message" id="auth-message" role="alert"></p>
+
+          <button class="button button-primary" id="auth-submit" type="submit">
+            Anmelden
+          </button>
+        </form>
+        <p class="security-note">
+          
+        </p>
+      </section>
+
+      <section class="admin-panel is-hidden" id="admin-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Verwaltung</p>
+            <h1>Wuensche bearbeiten</h1>
+          </div>
+          <button class="button button-soft" id="logout-button" type="button">
+            Abmelden
+          </button>
+        </div>
+        <p class="section-intro">
+          Fuege Wuensche hinzu, bearbeite sie oder entferne sie.
+          Reservierungsdetails werden hier absichtlich nicht angezeigt.
+        </p>
+        <form id="wish-form" class="form-grid admin-form">
+          <input type="hidden" id="wish-id" />
+          <label
+            >Name des Wunsches<input id="wish-name" required maxlength="90"
+          /></label>
+          <label
+            >Kategorie<input
+              id="wish-category"
+              required
+              maxlength="50"
+              placeholder="z. B. Buecher"
+          /></label>
+          <label
+            >Preis in EUR<input
+              id="wish-price"
+              type="number"
+              min="0"
+              step="0.01"
+              required
+          /></label>
+          <label
+            >Geschenkart<select id="wish-type">
+              <option value="small">Kleiner Wunsch</option>
+              <option value="large">Groesserer Wunsch</option>
+              <option value="group">Gemeinschaftsgeschenk</option>
+            </select></label
+          >
+          <label class="full-width"
+            >Beschreibung<textarea
+              id="wish-description"
+              rows="3"
+              maxlength="240"
+            ></textarea>
+          </label>
+          <label class="full-width"
+            >Produktlink (optional)<input
+              id="wish-link"
+              type="url"
+              placeholder="https://..."
+          /></label>
+          <label class="full-width"
+            >Wunschfoto hochladen<input
+              id="wish-image"
+              type="file"
+              accept="image/*"
+          /></label>
+          <div class="image-preview-wrap full-width">
+            <img
+              id="image-preview"
+              class="image-preview is-hidden"
+              alt="Vorschau des Wunschfotos"
+            /><span id="image-hint">Noch kein Foto ausgewaehlt.</span
+            ><label class="check-line is-hidden" id="remove-image-wrap"
+              ><input type="checkbox" id="remove-image" /> Aktuelles Foto
+              entfernen</label
+            >
+          </div>
+
+          <fieldset class="audience-field full-width">
+            <legend>Wer kann diesen Wunsch sehen?</legend>
+            <label class="check-line"
+              ><input type="checkbox" name="audience" value="alle" checked />
+              Alle</label
+            >
+            <label class="check-line"
+              ><input type="checkbox" name="audience" value="schwester" />
+              Schwester</label
+            >
+            <label class="check-line"
+              ><input type="checkbox" name="audience" value="familie" />
+              Familie</label
+            >
+            <label class="check-line"
+              ><input type="checkbox" name="audience" value="freund" />
+              Freund/in</label
+            >
+            <label class="check-line"
+              ><input type="checkbox" name="audience" value="sonstige" />
+              Andere</label
+            >
+            <label class="check-line">
+              <input type="checkbox" name="audience" value="mom" /> Mom
+            </label>
+
+            <label class="check-line">
+              <input type="checkbox" name="audience" value="weitere" /> Weitere
+              Wünsche
+            </label>
+          </fieldset>
+          <div class="form-actions full-width">
+            <button class="button button-primary" type="submit" id="save-wish">
+              Wunsch speichern</button
+            ><button class="button button-soft" type="button" id="cancel-edit">
+              Formular leeren
+            </button>
+          </div>
+        </form>
+        <div class="admin-list-head">
+          <h2>Deine Wuensche</h2>
+          <span id="wish-total"></span>
+        </div>
+        <div id="admin-wishes" class="admin-wish-list"></div>
+      </section>
+    </main>
+    <footer class="footer">
+      <span>Adminbereich / Tamaras Wunschliste</span>
+    </footer>
+  </body>
+</html>
