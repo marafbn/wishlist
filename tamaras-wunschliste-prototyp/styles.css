@@ -934,32 +934,37 @@ body.quiz-page-background {
   align-items: center;
 }
 
-/* Quiz: alle Frage-Kacheln kompakt und responsiv anordnen */
-.quiz-panel {
-  height: auto;
-  max-height: none;
-  overflow: visible;
+
+/* Hero-Titel und Buttons kleiner, damit alles besser hineinpasst */
+.hero {
+  padding-top: clamp(24px, 4vh, 42px);
+  padding-bottom: clamp(24px, 4vh, 42px);
 }
 
-.quiz-step {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+.hero h1 {
+  font-size: clamp(2.4rem, 4.3vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  margin-bottom: 14px;
 }
 
-.quiz-step > legend,
-.quiz-step > .question-hint {
-  grid-column: 1 / -1;
+.hero-description {
+  font-size: 0.9rem;
 }
 
-.quiz-step > .choice {
-  min-width: 0;
-  margin: 0;
-  padding: 11px 14px;
+.hero-actions {
+  gap: 10px;
+  margin-top: 16px;
 }
 
-@media (max-width: 640px) {
-  .quiz-step {
-    grid-template-columns: 1fr;
+.hero-actions .button {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 540px) {
+  .hero h1 {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
   }
 }
