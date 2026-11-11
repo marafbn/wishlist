@@ -1000,3 +1000,9 @@ body.quiz-page-background .quiz-panel fieldset.quiz-step > label.choice {
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 761px) {
+  body.quiz-page-background main.quiz-page {
+    zoom: 0.8;
+  }
+}
