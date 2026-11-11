@@ -69,16 +69,17 @@
     });
 
     if (style === "mehrere-kleine") {
-      // Budget-Limit gilt für jeden Wunsch einzeln, nicht für die Summe.
-      // So können mehrere passende Vorschläge zusammen über dem Budget liegen.
-      const chosen = available
-        .filter((wish) => wish.giftType === "small" && Number(wish.price) <= max)
-        .sort((a, b) => Number(a.price) - Number(b.price))
-        .slice(0, 4);
+  const chosen = available
+    .filter((wish) => Number(wish.price) <= max)
+    .sort((a, b) => Number(a.price) - Number(b.price));
 
-      const total = chosen.reduce((sum, wish) => sum + Number(wish.price || 0), 0);
-      return { style, wishes: chosen, total };
-    }
+  const total = chosen.reduce(
+    (sum, wish) => sum + Number(wish.price || 0),
+    0,
+  );
+
+  return { style, wishes: chosen, total };
+}
 
     const type = style === "ein-grosses" ? "large" : "group";
     const matches = available.filter(
