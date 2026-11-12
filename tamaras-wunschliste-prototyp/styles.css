@@ -307,19 +307,15 @@ p {
 }
 .wish-visual {
   display: grid;
-  height: 280px; /* was 220px */
-  padding: 12px;
+  height: 220px;
   place-items: center;
   overflow: hidden;
   background: linear-gradient(145deg, #b99ec5, #e8ddeb);
 }
-
 .wish-visual img {
-  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* shows the entire image */
-  object-position: center;
+  object-fit: cover;
 }
 .symbol-placeholder {
   color: rgba(53, 33, 61, 0.75);
@@ -904,6 +900,21 @@ body.quiz-page-background {
 }
 
 
+/* Wunschbilder vollständig und mittig anzeigen */
+.wish-visual {
+  display: grid;
+  place-items: center;
+}
+
+.wish-visual img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+  object-position: center;
+}
 
 /* Preis und Shop-Link trotz unterschiedlich langer Texte ausrichten */
 .wish-content {
@@ -921,4 +932,77 @@ body.quiz-page-background {
   min-height: 32px;
   margin-top: auto;
   align-items: center;
+}
+
+
+/* Hero-Titel und Buttons kleiner, damit alles besser hineinpasst */
+.hero {
+  padding-top: clamp(24px, 4vh, 42px);
+  padding-bottom: clamp(24px, 4vh, 42px);
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 4.3vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  margin-bottom: 14px;
+}
+
+.hero-description {
+  font-size: 0.9rem;
+}
+
+.hero-actions {
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.hero-actions .button {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 540px) {
+  .hero h1 {
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+  }
+}
+
+/* Nur Quiz-Seite: Auswahlkacheln kompakter anordnen */
+body.quiz-page-background .quiz-panel {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+
+body.quiz-page-background .quiz-panel fieldset.quiz-step:not(.is-hidden) {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body.quiz-page-background .quiz-panel fieldset.quiz-step > legend,
+body.quiz-page-background .quiz-panel fieldset.quiz-step > .question-hint {
+  grid-column: 1 / -1;
+}
+
+body.quiz-page-background .quiz-panel fieldset.quiz-step > label.choice {
+  min-width: 0;
+  min-height: 58px;
+  margin: 0;
+  padding: 12px 14px;
+}
+
+/* Auf schmalen Bildschirmen bleiben die Antworten untereinander */
+@media (max-width: 640px) {
+  body.quiz-page-background .quiz-panel fieldset.quiz-step:not(.is-hidden) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 761px) {
+  body.quiz-page-background main.quiz-page {
+    zoom: 0.8;
+  }
 }
