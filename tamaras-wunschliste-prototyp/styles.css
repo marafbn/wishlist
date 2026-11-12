@@ -902,16 +902,15 @@ body.quiz-page-background {
 
 /* Wunschbilder vollständig und mittig anzeigen */
 .wish-visual {
+  height: 220px;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .wish-visual img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 70%;
-  max-height: 70%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   object-position: center;
 }
