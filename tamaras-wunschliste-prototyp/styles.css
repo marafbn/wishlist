@@ -305,12 +305,16 @@ p {
   background: #f8f4f9;
   box-shadow: var(--shadow);
 }
+.wish-card {
+  overflow: visible;
+}
+
 .wish-visual {
-  display: grid;
-  place-items: center;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 220px;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(145deg, #b99ec5, #e8ddeb);
 }
 
@@ -907,12 +911,16 @@ body.quiz-page-background {
 
 
 /* Wunschbilder vollständig und mittig anzeigen */
+.wish-card {
+  overflow: visible;
+}
+
 .wish-visual {
-  display: grid;
-  place-items: center;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 220px;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(145deg, #b99ec5, #e8ddeb);
 }
 
